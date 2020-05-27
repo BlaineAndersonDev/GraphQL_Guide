@@ -354,4 +354,7 @@
     end
   end
   ```
+
+* Uncomment CORS at `app/config/initializers/cors.rb`
+
 * **API Done.**

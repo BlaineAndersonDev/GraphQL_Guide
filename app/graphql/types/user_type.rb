@@ -6,7 +6,6 @@ module Types
     field :posts, [Types::PostType], null: true
     field :posts_count, Integer, null: true
 
-
     def posts_count
       object.posts.size
     end

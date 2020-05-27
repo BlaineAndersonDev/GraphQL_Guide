@@ -1,4 +1,4 @@
-  * rails new graphql_two --api --skip-test -d postgresql
+* rails new graphql_two --api --skip-test -d postgresql
 
   ```
   source 'https://rubygems.org'
@@ -85,6 +85,273 @@
   end
   ```
 
-  * `require "sprockets/railtie"`
+* `require "sprockets/railtie"`
 
-  * Add Favicon to Public
+* Add Favicon to Public
+  
+* In `app/graphql/types`:
+  * `user_type.rb`:
+  ```
+  module Types
+    class UserType < Types::BaseObject
+      field :id, ID, null: false
+      field :name, String, null: true
+      field :email, String, null: true
+      field :posts, [Types::PostType], null: true
+      field :posts_count, Integer, null: true
+
+      def posts_count
+        object.posts.size
+      end
+    end
+  end
+  ```
+  * `post_type.rb`:
+  ```
+  module Types
+    class PostType < Types::BaseObject
+      field :id, Integer, null: false
+      field :title, String, null: false
+      field :body, String, null: false
+      field :user, Types::UserType, null: false
+    end
+  end
+  ```
+  * `query_type.rb`:
+  ```
+  module Types
+    class QueryType < Types::BaseObject
+      # /users
+      field :users, [Types::UserType], null: false
+
+      def users
+        User.all
+      end
+
+      # /user/:id
+      field :user, Types::UserType, null: false do
+        argument :id, ID, required: true
+      end
+
+      def user(id:)
+        User.find(id)
+      end
+    end
+  end
+  ```
+  * `mutation_type.rb`:
+  ```
+  module Types
+    class MutationType < Types::BaseObject
+
+      field :create_user, mutation: Mutations::Users::CreateUser
+      field :update_user, mutation: Mutations::Users::UpdateUser
+      field :delete_user, mutation: Mutations::Users::DeleteUser
+
+      field :create_post, mutation: Mutations::Posts::CreatePost
+      field :update_post, mutation: Mutations::Posts::UpdatePost
+      field :delete_post, mutation: Mutations::Posts::DeletePost
+      
+    end
+  end
+  ```
+
+* In `app/graphql/mutations`:
+  * `users/create_user.rb`:
+  ```
+  class Mutations::Users::CreateUser < Mutations::BaseMutation 
+    argument :name, String, required: true
+    argument :email, String, required: true
+
+    field :user, Types::UserType, null: false
+    field :errors, [String], null: false 
+
+    def resolve(**attributes)
+      user = User.new(attributes)
+          if user.save
+        {
+          user: user,
+          errors: []
+        }
+      else
+        {
+          user: nil,
+          errors: user.errors.full_messages
+        }
+      end
+    end
+  end
+  ```
+  * `users/update_user.rb`:
+  ```
+  class Mutations::Users::UpdateUser < Mutations::BaseMutation 
+    argument :id, ID, required: true
+    argument :name, String, required: false
+    argument :email, String, required: false
+
+    field :user, Types::UserType, null: false
+    field :errors, [String], null: false 
+
+    def resolve(id:, **attributes)
+      if User.exists?(id)
+        user = User.find(id)
+        if user.update(attributes)
+          {
+            user: user,
+            errors: []
+          }
+        else
+          {
+            user: nil,
+            errors: user.errors.full_messages
+          }
+        end
+      else
+        user = User.new(attributes)
+        if user.save
+          {
+            user: user,
+            errors: []
+          }
+        else
+          {
+            user: nil,
+            errors: user.errors.full_messages
+          }
+        end
+      end
+    end
+  end
+  ```
+  * `users/delete_user.rb`:
+  ```
+  class Mutations::Users::DeleteUser < Mutations::BaseMutation 
+    argument :id, ID, required: true
+
+    field :user, Types::UserType, null: true
+    field :errors, [String], null: true 
+
+    def resolve(id:)
+      if User.exists?(id)
+        user = User.find(id)
+        if user.destroy()
+          {
+            user: user,
+            errors: []
+          }
+        else
+          {
+            user: nil,
+            errors: user.errors.full_messages
+          }
+        end
+      else
+        {
+          user: nil,
+          errors: nil
+        }
+      end
+    end
+  end
+  ```
+
+* In `app/graphql/mutations`:
+  * `posts/create_post.rb`:
+  ```
+  class Mutations::Posts::CreatePost < Mutations::BaseMutation 
+    argument :title, String, required: true
+    argument :body, String, required: true
+    argument :user_id, ID, required: true
+
+    field :post, Types::PostType, null: false
+    field :errors, [String], null: false 
+
+    def resolve(**attributes)
+      post = Post.new(attributes)
+          if post.save
+        {
+          post: post,
+          errors: []
+        }
+      else
+        {
+          post: nil,
+          errors: post.errors.full_messages
+        }
+      end
+    end
+  end
+  ```
+  * `posts/update_post.rb`:
+  ```
+  class Mutations::Posts::UpdatePost < Mutations::BaseMutation 
+    argument :id, ID, required: true
+    argument :title, String, required: false
+    argument :body, String, required: false
+
+    field :post, Types::PostType, null: false
+    field :errors, [String], null: false 
+
+    def resolve(id:, **attributes)
+      if Post.exists?(id)
+        post = Post.find(id)
+        if post.update(attributes)
+          {
+            post: post,
+            errors: []
+          }
+        else
+          {
+            post: nil,
+            errors: post.errors.full_messages
+          }
+        end
+      else
+        post = Post.new(attributes)
+        if post.save
+          {
+            post: post,
+            errors: []
+          }
+        else
+          {
+            post: nil,
+            errors: post.errors.full_messages
+          }
+        end
+      end
+    end
+  end 
+  ```
+  * `posts/delete_post.rb`:
+  ```
+  class Mutations::Posts::DeletePost < Mutations::BaseMutation 
+    argument :id, ID, required: true
+
+    field :post, Types::PostType, null: true
+    field :errors, [String], null: true 
+
+    def resolve(id:)
+      if Post.exists?(id)
+        post = Post.find(id)
+        if post.destroy()
+          {
+            post: post,
+            errors: []
+          }
+        else
+          {
+            post: nil,
+            errors: post.errors.full_messages
+          }
+        end
+      else
+        {
+          post: nil,
+          errors: nil
+        }
+      end
+    end
+  end
+  ```
+* **API Done.**

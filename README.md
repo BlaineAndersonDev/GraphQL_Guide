@@ -355,6 +355,219 @@
   end
   ```
 
-* Uncomment CORS at `app/config/initializers/cors.rb`
+* Overwrite `app/config/initializers/cors.rb`
+  ```
+  Rails.application.config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins 'http://localhost:3001'
+
+      resource '*',
+        headers: :any,
+        methods: [:get, :post, :put, :patch, :delete, :options, :head]
+    end
+  end
+  ```
 
 * **API Done.**
+
+* **BEGIN FRONTEND**
+
+  ```bash
+  create-react-app frontend
+  ```
+
+  * `"start": "export PORT=3001 && react-scripts start"`
+
+  ```bash
+  cd frontend
+  yarn start
+  ```
+
+  * Create `frontend/src/components`
+    * Move `App.js`, `App.css` into `frontend/components`
+    * Delete `setupTests.js`, `logo.svg`, `App.test.js` from `frontend/src`
+    * Delete `logo192.png`, `logo512.png` from `frontend/public`
+
+  * Update `index.js`:
+  ```
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import './index.css';
+  import App from './components/App';
+  import * as serviceWorker from './serviceWorker';
+
+  ReactDOM.render(<App />, document.getElementById("root"));
+
+  serviceWorker.unregister();
+  ```
+
+  * Update `App.js`:
+  ```
+  import React from "react";
+
+  function App() {
+    return <div className="App"></div>;
+  }
+
+  export default App;
+  ```
+
+  * Make sure you are in the correct directory.
+  ```bash
+  yarn add react-apollo apollo-boost graphql
+  ```
+
+  * Update `index.js`:
+  ```
+  import React from "react";
+  import ReactDOM from "react-dom";
+  import "./index.css";
+  import App from "./components/App";
+  import * as serviceWorker from "./serviceWorker";
+  import { ApolloProvider } from "react-apollo";
+  import { ApolloClient } from "apollo-client";
+  import { createHttpLink } from "apollo-link-http";
+  import { InMemoryCache } from "apollo-cache-inmemory";
+
+  const client = new ApolloClient({
+    link: createHttpLink({ uri: "http://localhost:3000/graphql" }),
+    cache: new InMemoryCache(),
+  });
+
+  ReactDOM.render(
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>,
+    document.getElementById("root")
+  );
+
+  serviceWorker.unregister();
+  ```
+  * Update `index.css`:
+  ```
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: whitesmoke;
+  } 
+  ```
+
+  * Update `App.js`:
+  ```
+  import React from "react";
+  import "./App.css";
+  import Users from "./users/Users.js";
+
+  class App extends React.Component {
+    render() {
+      return (
+        <div id="app-wrapper">
+          <Users />
+        </div>
+      );
+    }
+  }
+
+  export default App;
+  ```
+  * Update `App.css`:
+  ```
+  #app-wrapper {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  ```
+
+  * Make Directory `frontend/src/components/users`
+  * Create `frontend/src/components/users/Users.js`
+  ```
+  import React from 'react';
+  import "./Users.css";
+  import { useQuery } from "@apollo/react-hooks";
+  import gql from 'graphql-tag';
+
+  const GET_USERS = gql`
+    {
+      users {
+        id
+        name
+        email
+        postsCount
+      }
+    }
+  `;
+
+  function Users() {
+    const { loading, error, data } = useQuery(GET_USERS);
+
+    if (loading) return 'Loading...';
+    if (error) return `Error ${error.message}`;
+
+    return (
+      <div id="users-wrapper">
+        {data.users.map((user) => (
+          <div className="user-container" key={user.id}>
+            <h3>{user.name}</h3>
+            <p>{user.email}</p>
+            <p>{user.postsCount} posts</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  export default Users;
+  ```
+  * Create `frontend/src/components/users/Users.css`
+  ```
+  #users-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .user-container {
+    flex: 0 0 30%;
+    min-width: 200px;
+    min-height: 200px;
+    max-height: 200px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    border: gray solid 1px;
+    margin: 10px;
+  }
+  ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,18 +1,19 @@
-#users-wrapper {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-}
-.users-container {
-  flex: 0 0 30%;
-  min-width: 200px;
-  min-height: 200px;
-  max-height: 200px;
+#user-wrapper {
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  border: gray solid 1px;
+}
+.user-posts-container {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
   margin: 10px;
+}
+.user-post {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }

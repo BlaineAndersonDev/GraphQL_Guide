@@ -482,6 +482,7 @@
   ```
 
   * Make Directory `frontend/src/components/users`
+  ### **Get Users**
   * Create `frontend/src/components/users/Users.js`
   ```
   import React from 'react';
@@ -509,7 +510,7 @@
     return (
       <div id="users-wrapper">
         {data.users.map((user) => (
-          <div className="user-container" key={user.id}>
+          <div className="users-container" key={user.id}>
             <h3>{user.name}</h3>
             <p>{user.email}</p>
             <p>{user.postsCount} posts</p>
@@ -529,7 +530,7 @@
     justify-content: center;
     align-items: center;
   }
-  .user-container {
+  .users-container {
     flex: 0 0 30%;
     min-width: 200px;
     min-height: 200px;
@@ -543,6 +544,156 @@
   }
   ```
 
+  ### **Get User**
+  * Update `frontend/src/components/users/App.js`
+  ```
+  import React from "react";
+  import "./App.css";
+  import Users from "./users/Users.js";
+  import User from "./users/User.js";
+
+  class App extends React.Component {
+    state = {
+      selectedUser: null,
+    };
+
+    selectUser = (user) => {
+      this.setState({ selectedUser: user });
+    };
+
+    render() {
+      return (
+        <div id="app-wrapper">
+          {this.state.selectedUser ? (
+            <User user={this.state.selectedUser} selectUser={this.selectUser} />
+          ) : (
+            <Users selectUser={this.selectUser} />
+          )}
+        </div>
+      ); 
+    }
+  }
+
+  export default App;
+  ```
+  * Update `frontend/src/components/users/Users.js`
+  ```
+  import React from 'react';
+  import "./Users.css";
+  import { useQuery } from "@apollo/react-hooks";
+  import gql from 'graphql-tag';
+
+  const GET_USERS = gql`
+    {
+      users {
+        id
+        name
+        email
+        postsCount
+      }
+    }
+  `;
+
+  function Users({ selectUser }) {
+    const { loading, error, data } = useQuery(GET_USERS);
+
+    if (loading) return "Loading...";
+    if (error) return `Error ${error.message}`;
+
+    return (
+      <React.Fragment>
+        <div id="users-wrapper">
+          {data.users.map((user) => (
+            <div
+              className="users-container"
+              key={user.id}
+              onClick={selectUser.bind(this, user)}
+            >
+              <h3>{user.name}</h3>
+              <p>{user.email}</p>
+              <p>{user.postsCount} posts</p>
+            </div>
+          ))}
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  export default Users;
+  ```
+  * Update `frontend/src/components/users/User.js`
+  ```
+  import React from "react";
+  import "./User.css";
+  import { useQuery } from "@apollo/react-hooks";
+  import gql from "graphql-tag";
+
+  const GET_USER = gql`
+    query User($id: ID!) {
+      user(id: $id) {
+        id
+        name
+        email
+        posts {
+          id
+          title
+        }
+      }
+    }
+  `;
+
+  function User({ user, selectUser }) {
+    const { loading, error, data } = useQuery(GET_USER, {
+      variables: { id: user.id },
+    });
+
+    if (loading) return "Loading...";
+    if (error) return `Error ${error.message}`;
+
+    return (
+      <React.Fragment>
+        <div className="user-wrapper">
+          <h1>{data.user.name}</h1>
+          <p>{data.user.email}</p>
+          <div className="user-posts-container">
+            {data.user.posts.map((post) => (
+              <div className="user-post" key={post.id}>
+                <p>{post.title}</p>
+              </div>
+            ))}
+          </div>
+          <button onClick={selectUser.bind(this, null)}>
+            Back
+          </button>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  export default User;
+  ```
+  * Update `frontend/src/components/users/User.css`
+  ```
+  #user-wrapper {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .user-posts-container {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+  }
+  .user-post {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  ```
 
 
 

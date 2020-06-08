@@ -14,12 +14,14 @@ class App extends React.Component {
     this.setState({ 
       selectedUser: user, 
     });
-    this.onRefetchUsers(true)
   };
 
-  onRefetchUsers = (boolean) => {
+  refreshUsersList = () => {
     this.setState({
-      refetchUsers: boolean
+      refetchUsers: true
+    });
+    this.setState({
+      refetchUsers: false
     });
   };
 
@@ -27,11 +29,11 @@ class App extends React.Component {
     return (
       <div id="app-wrapper">
         <div>Refresh: {this.state.refetchUsers}</div>
-        <CreateUser onRefetchUsers={this.onRefetchUsers} onUserSelected={this.onUserSelected}/>
+        <CreateUser refreshUsersList={this.refreshUsersList} onUserSelected={this.onUserSelected}/>
         {this.state.selectedUser ? (
           <User user={this.state.selectedUser} onUserSelected={this.onUserSelected} />
         ) : (
-          <Users refetchUsers={this.state.refetchUsers} onRefetchUsers={this.onRefetchUsers} onUserSelected={this.onUserSelected} />
+          <Users refetchUsers={this.state.refetchUsers} refreshUsersList={this.refreshUsersList} onUserSelected={this.onUserSelected} />
         )}
       </div>
     );

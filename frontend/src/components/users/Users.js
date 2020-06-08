@@ -26,7 +26,6 @@ function Users({ refetchUsers, onRefetchUsers, onUserSelected }) { //Props
   if (error) return `Error! ${error.message}`;
   if (refetchUsers) {
     refetch()
-    onRefetchUsers(false)
   };
 
   return (

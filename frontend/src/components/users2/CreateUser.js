@@ -16,14 +16,17 @@ const CREATE_USER = gql`
   }
 `;
 
-function CreateUser({ onUserSelected }) {
+function CreateUser({ onRefetchUsers, onUserSelected }) {
   const updateState = () => {
     setName("");
     setEmail("");
   };
 
   const updateParent = (data) => {
-    onUserSelected(data.createUser.user)
+    // Use "onRefetchUsers" to create user and update the users page.
+    onRefetchUsers(true)
+    // Use "onUserSelected" to create user and load the show page.
+    // onUserSelected(data.createUser.user)
   };
 
   const [name, setName] = useState("");

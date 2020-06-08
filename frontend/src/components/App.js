@@ -27,7 +27,7 @@ class App extends React.Component {
     return (
       <div id="app-wrapper">
         <div>Refresh: {this.state.refetchUsers}</div>
-        <CreateUser onUserSelected={this.onUserSelected}/>
+        <CreateUser onRefetchUsers={this.onRefetchUsers} onUserSelected={this.onUserSelected}/>
         {this.state.selectedUser ? (
           <User user={this.state.selectedUser} onUserSelected={this.onUserSelected} />
         ) : (

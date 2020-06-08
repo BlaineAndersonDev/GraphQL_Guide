@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
-import Users from "./users2/Users.js";
-import User from "./users2/User.js";
-import CreateUser from "./users2/CreateUser";
+import Users from "./users/Users.js";
+import User from "./users/User.js";
+import CreateUser from "./users/CreateUser";
 
 class App extends React.Component {
   state = {

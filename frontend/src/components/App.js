@@ -1,27 +1,40 @@
 import React from "react";
 import "./App.css";
-import Users from "./users/Users.js";
-import User from "./users/User.js";
+import Users from "./users2/Users.js";
+import User from "./users2/User.js";
+import CreateUser from "./users2/CreateUser";
 
 class App extends React.Component {
   state = {
     selectedUser: null,
+    refetchUsers: false
   };
 
-  selectUser = (user) => {
-    this.setState({ selectedUser: user });
+  onUserSelected = (user) => {
+    this.setState({ 
+      selectedUser: user, 
+    });
+    this.onRefetchUsers(true)
+  };
+
+  onRefetchUsers = (boolean) => {
+    this.setState({
+      refetchUsers: boolean
+    });
   };
 
   render() {
     return (
       <div id="app-wrapper">
+        <div>Refresh: {this.state.refetchUsers}</div>
+        <CreateUser onUserSelected={this.onUserSelected}/>
         {this.state.selectedUser ? (
-          <User user={this.state.selectedUser} selectUser={this.selectUser} />
+          <User user={this.state.selectedUser} onUserSelected={this.onUserSelected} />
         ) : (
-          <Users selectUser={this.selectUser} />
+          <Users refetchUsers={this.state.refetchUsers} onRefetchUsers={this.onRefetchUsers} onUserSelected={this.onUserSelected} />
         )}
       </div>
-    ); 
+    );
   }
 }
 

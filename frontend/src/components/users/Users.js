@@ -14,7 +14,7 @@ const GET_USERS = gql`
   }
 `;
 
-function Users({ refreshCount, handleSelectedUser, DeleteUser }) {
+function Users({ refreshCount, handleSelectedUser, UpdateUser, DeleteUser }) {
 
   const refetchUserList = () => {
     refetch()
@@ -36,12 +36,14 @@ function Users({ refreshCount, handleSelectedUser, DeleteUser }) {
         {data.users.map((user) => (
           <div className="users-container" key={user.id} >
             <h3>{user.name}</h3>
+            <p>{user.id}</p>
             <p>{user.email}</p>
             <p>{user.postsCount} posts</p>
             {/* GET USER */}
             <button onClick={() => { handleSelectedUser(user); }}>
               Select
             </button>
+            <UpdateUser userId={user.id} refetchUserList={refetchUserList} />
             <DeleteUser userId={user.id} refetchUserList={refetchUserList} />
           </div>
         ))}

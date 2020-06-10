@@ -17,7 +17,7 @@ const GET_USER = gql`
   }
 `;
 
-function User({ user, handleSelectedUser, forceRefresh, DeleteUser }) {
+function User({ user, handleSelectedUser, forceRefresh, UpdateUser, DeleteUser }) {
 
   const refetchUserList = () => {
     handleSelectedUser(null)
@@ -36,6 +36,7 @@ function User({ user, handleSelectedUser, forceRefresh, DeleteUser }) {
   return (
     <div id="user-wrapper">
       <h1>{data.user.name}</h1>
+      <p>{data.user.id}</p>
       <p>{data.user.email}</p>
       <div id="user-posts-container">
         {data.user.posts.map((post) => (
@@ -45,6 +46,7 @@ function User({ user, handleSelectedUser, forceRefresh, DeleteUser }) {
         ))}
       </div>
       {/* DELETE */}
+      <UpdateUser userId={data.user.id} refetchUserList={refetchUserList}/>
       <DeleteUser userId={data.user.id} refetchUserList={refetchUserList}/>
       <button onClick={handleSelectedUser.bind(this, null)}>Back</button>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import "../users/Users.css";
 import gql from "graphql-tag";
 
@@ -14,28 +14,13 @@ const GET_USERS = gql`
   }
 `;
 
-const DELETE_USER = gql`
-  mutation DeleteUser($id: ID!) {
-    deleteUser(input: { id: $id }) {
-      user {
-        id
-      }
-      errors
-    }
-  }
-`;
-
-function Users({ refreshCount, handleSelectedUser }) {
+function Users({ refreshCount, handleSelectedUser, DeleteUser }) {
 
   const refetchUserList = () => {
     refetch()
   };
 
   const { loading, error, data, refetch, networkStatus } = useQuery(GET_USERS);
-
-  const [deleteUser] = useMutation(DELETE_USER, {
-    onCompleted: refetchUserList
-  });
 
   if (networkStatus === 4) return "Refetching!";
   if (loading) return <p>loading...</p>;
@@ -57,10 +42,7 @@ function Users({ refreshCount, handleSelectedUser }) {
             <button onClick={() => { handleSelectedUser(user); }}>
               Select
             </button>
-            {/* DELETE */}
-            <button onClick={() => { deleteUser({ variables: { id: user.id } }); }}>
-              Delete
-            </button>
+            <DeleteUser userId={user.id} refetchUserList={refetchUserList} />
           </div>
         ))}
       </div>

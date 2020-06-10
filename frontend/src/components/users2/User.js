@@ -1,6 +1,6 @@
 import React from "react";
 import "../users/User.css";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
 const GET_USER = gql`
@@ -17,18 +17,7 @@ const GET_USER = gql`
   }
 `;
 
-const DELETE_USER = gql`
-  mutation DeleteUser($id: ID!) {
-    deleteUser(input: { id: $id }) {
-      user {
-        id
-      }
-      errors
-    }
-  }
-`;
-
-function User({ user, handleSelectedUser, forceRefresh }) {
+function User({ user, handleSelectedUser, forceRefresh, DeleteUser }) {
 
   const refetchUserList = () => {
     handleSelectedUser(null)
@@ -37,10 +26,6 @@ function User({ user, handleSelectedUser, forceRefresh }) {
   
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { id: user.id },
-  });
-
-  const [deleteUser] = useMutation(DELETE_USER, {
-    onCompleted: refetchUserList
   });
 
   if (loading) return "Loading...";
@@ -58,9 +43,7 @@ function User({ user, handleSelectedUser, forceRefresh }) {
         ))}
       </div>
       {/* DELETE */}
-      <button onClick={() => { deleteUser({ variables: { id: user.id } }); }}>
-        Delete
-            </button>
+      <DeleteUser userId={data.user.id} refetchUserList={refetchUserList}/>
       <button onClick={handleSelectedUser.bind(this, null)}>Back</button>
     </div>
   );

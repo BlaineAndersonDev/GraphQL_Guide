@@ -3,6 +3,7 @@ import "../users/Users.css";
 import Users from "./Users.js";
 import User from "./User.js";
 import CreateUser from "./CreateUser.js";
+import DeleteUser from "./DeleteUser.js";
 
 class Index extends React.Component {
   state = {
@@ -31,12 +32,14 @@ class Index extends React.Component {
             user={this.state.selectedUser}
             forceRefresh={this.forceRefresh}
             handleSelectedUser={this.handleSelectedUser}
+            DeleteUser={DeleteUser} //Component
           />
         ) : (
           <Users 
             refreshCount = {this.state.refreshCount}
             forceRefresh={this.forceRefresh}
             handleSelectedUser={this.handleSelectedUser}
+            DeleteUser={DeleteUser} //Component
           />
         )}
       </div>

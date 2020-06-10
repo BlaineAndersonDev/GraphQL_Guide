@@ -1,8 +1,6 @@
 import React from "react";
 import "./App.css";
-import Users from "./users/Users.js";
-import User from "./users/User.js";
-import CreateUser from "./users/CreateUser";
+import Index from "./users2/Index.js";
 
 class App extends React.Component {
   state = {
@@ -28,13 +26,7 @@ class App extends React.Component {
   render() {
     return (
       <div id="app-wrapper">
-        <div>Refresh: {this.state.refetchUsers}</div>
-        <CreateUser refreshUsersList={this.refreshUsersList} onUserSelected={this.onUserSelected}/>
-        {this.state.selectedUser ? (
-          <User user={this.state.selectedUser} onUserSelected={this.onUserSelected} />
-        ) : (
-          <Users refetchUsers={this.state.refetchUsers} refreshUsersList={this.refreshUsersList} onUserSelected={this.onUserSelected} />
-        )}
+        <Index />
       </div>
     );
   }

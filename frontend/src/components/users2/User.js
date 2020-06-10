@@ -1,8 +1,7 @@
 import React from "react";
 import "../users/User.css";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import DeleteUser from "./DeleteUser";
 
 const GET_USER = gql`
   query User($id: ID!) {
@@ -18,14 +17,31 @@ const GET_USER = gql`
   }
 `;
 
-function User({ user, onUserSelected, refreshUsersList }) {
+const DELETE_USER = gql`
+  mutation DeleteUser($id: ID!) {
+    deleteUser(input: { id: $id }) {
+      user {
+        id
+      }
+      errors
+    }
+  }
+`;
+
+function User({ user, handleSelectedUser, forceRefresh }) {
+
+  const refetchUserList = () => {
+    handleSelectedUser(null)
+    forceRefresh();
+  };
+  
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { id: user.id },
   });
 
-  const onUserDelete = () => {
-    refreshUsersList();
-  };
+  const [deleteUser] = useMutation(DELETE_USER, {
+    onCompleted: refetchUserList
+  });
 
   if (loading) return "Loading...";
   if (error) return `Error ${error.message}`;
@@ -41,7 +57,11 @@ function User({ user, onUserSelected, refreshUsersList }) {
           </div>
         ))}
       </div>
-      <button onClick={onUserSelected.bind(this, null)}>Back</button>
+      {/* DELETE */}
+      <button onClick={() => { deleteUser({ variables: { id: user.id } }); }}>
+        Delete
+            </button>
+      <button onClick={handleSelectedUser.bind(this, null)}>Back</button>
     </div>
   );
 }

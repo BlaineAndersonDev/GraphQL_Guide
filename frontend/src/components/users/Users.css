@@ -16,3 +16,11 @@
   border: gray solid 1px;
   margin: 10px;
 }
+
+
+#create-user-wrapper{
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}

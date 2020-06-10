@@ -14,19 +14,20 @@ const GET_USERS = gql`
   }
 `;
 
-function Users({ refetchUsers, onRefetchUsers, onUserSelected }) { //Props
+function Users({ refetchUsers, refreshUsersList, onUserSelected }) {
+  //Props
   const { loading, error, data, refetch, networkStatus } = useQuery(GET_USERS, {
     // variables: { id },
     // skip: !id, // Skip if no user is selected
     // pollInterval: 500, // automatically re-fetch data (500 = 0.5s)
   });
 
-  if (networkStatus === 4) return 'Refetching!';
-  if (loading) return 'Loading...';
+  if (networkStatus === 4) return "Refetching!";
+  if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
   if (refetchUsers) {
-    refetch()
-  };
+    refetch();
+  }
 
   return (
     <div id="users-wrapper">

@@ -1,0 +1,47 @@
+import React from "react";
+import "../users/Users.css";
+import Users from "./Users.js";
+import User from "./User.js";
+import CreateUser from "./CreateUser.js";
+
+class Index extends React.Component {
+  state = {
+    refreshCount: 0,
+    selectedUser: null
+  };
+
+  forceRefresh = async () => {
+    await this.setState({
+      refreshCount: (this.state.refreshCount + 1)
+    })
+  };
+
+  handleSelectedUser = async (user) => {
+    await this.setState({ selectedUser: user })
+  };
+
+  render() {
+    return (
+      <div id="app-wrapper">
+        <CreateUser 
+          forceRefresh={this.forceRefresh}
+        />
+        {this.state.selectedUser ? (
+          <User
+            user={this.state.selectedUser}
+            forceRefresh={this.forceRefresh}
+            handleSelectedUser={this.handleSelectedUser}
+          />
+        ) : (
+          <Users 
+            refreshCount = {this.state.refreshCount}
+            forceRefresh={this.forceRefresh}
+            handleSelectedUser={this.handleSelectedUser}
+          />
+        )}
+      </div>
+    );
+  }
+}
+
+export default Index;

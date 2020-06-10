@@ -3,23 +3,54 @@ import "./App.css";
 import Users from "./users/Users.js";
 import User from "./users/User.js";
 import CreateUser from "./users/CreateUser";
+import DeleteUser from "./users/DeleteUser";
 
 class App extends React.Component {
   state = {
     selectedUser: null,
+    refetchUsers: false,
   };
 
-  selectUser = (user) => {
-    this.setState({ selectedUser: user });
+  onUserSelected = (user) => {
+    this.setState({
+      selectedUser: user,
+    });
   };
+
+  refreshUsersList = () => {
+    this.setState({
+      refetchUsers: true,
+    });
+    this.setState({
+      refetchUsers: false,
+    });
+  };
+
   render() {
     return (
       <div id="app-wrapper">
-        <CreateUser selectUser={this.selectUser} />
+        <div>Refresh: {this.state.refetchUsers}</div>
+        <CreateUser refreshUsersList={this.refreshUsersList} />
         {this.state.selectedUser ? (
-          <User user={this.state.selectedUser} selectUser={this.selectUser} />
+          <div className="app-container">
+            <User
+              user={this.state.selectedUser}
+              onUserSelected={this.onUserSelected}
+              refreshUsersList={this.refreshUsersList}
+            />
+            <DeleteUser
+              userId={this.state.selectedUser.id}
+              refreshUsersList={this.refreshUsersList}
+            />
+          </div>
         ) : (
-          <Users selectUser={this.selectUser} />
+          <div className="app-container">
+            <Users
+              refetchUsers={this.state.refetchUsers}
+              refreshUsersList={this.refreshUsersList}
+              onUserSelected={this.onUserSelected}
+            />
+          </div>
         )}
       </div>
     );

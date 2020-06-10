@@ -1,5 +1,5 @@
 import React from "react";
-import "../users/Users.css";
+import "./styles/Index.css";
 import Users from "./Users.js";
 import User from "./User.js";
 import CreateUser from "./CreateUser.js";
@@ -23,7 +23,7 @@ class Index extends React.Component {
 
   render() {
     return (
-      <div id="app-wrapper">
+      <div id="user-index-wrapper">
         <CreateUser 
           forceRefresh={this.forceRefresh}
         />

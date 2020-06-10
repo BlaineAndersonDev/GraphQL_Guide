@@ -1,8 +1,9 @@
-#app-wrapper {
+#user-index-wrapper{
+  height: 100%;
+  width: 100%;
+  background-color: whitesmoke;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  background-color: whitesmoke;
-  font-family: Arial, Helvetica, sans-serif;
 }

@@ -1,4 +1,6 @@
 #users-wrapper {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -15,12 +17,4 @@
   align-items: center;
   border: gray solid 1px;
   margin: 10px;
-}
-
-
-#create-user-wrapper{
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  align-items: center;
 }

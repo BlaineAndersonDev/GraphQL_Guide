@@ -1,8 +1,8 @@
-#app-wrapper {
+#create-user-wrapper {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  background-color: whitesmoke;
-  font-family: Arial, Helvetica, sans-serif;
 }

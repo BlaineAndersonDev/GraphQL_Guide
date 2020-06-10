@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./styles/CreateUser.css";
 import gql from "graphql-tag";
 import { useMutation } from "react-apollo";
 
@@ -16,58 +17,41 @@ const CREATE_USER = gql`
   }
 `;
 
-function CreateUser({ refreshUsersList }) {
+function CreateUser({ forceRefresh }) {
   const updateState = () => {
     setName("");
     setEmail("");
   };
 
-  const updateParent = (data) => {
-    refreshUsersList()
+  const updateParent = () => {
+    forceRefresh();
   };
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [createUser, { loading, error }] = useMutation(CREATE_USER, {
+  const [createUser, { loading, error, networkStatus }] = useMutation(CREATE_USER, {
     update: updateState,
     onCompleted: updateParent
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (networkStatus === 4) return "Refetching!";
+  if (loading) return "Loading...";
+  if (error) return `Error ${error.message}`;
 
   return (
-    <div>
-      <div>State - Name: {name}</div>
-      <div>State - Email: {email}</div>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          createUser({
-            variables: {
-              name: name,
-              email: email
-            }
-          });
-        }}
-      >
-        <div>
-          <input
-            type="text"
-            value={name}
-            placeholder="Name"
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            value={email}
-            placeholder="Name"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <button type="submit">Add Todo</button>
+    <div id="create-user-wrapper">
+      <h3>Create New User</h3>
+      <form onSubmit={e => {
+        e.preventDefault();
+        createUser({
+          variables: { name: name, email: email }
+        });
+        setName("");
+        setEmail("");
+      }}>
+        <input type="text" value={name} placeholder="Name" onChange={(e) => setName(e.target.value)} />
+        <input type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+        <button type="submit">Create User</button>
       </form>
     </div>
   );

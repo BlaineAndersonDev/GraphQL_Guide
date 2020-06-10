@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles/DeleteUser.css";
 import gql from "graphql-tag";
 import { useMutation } from "react-apollo";
 
@@ -13,22 +14,22 @@ const DELETE_USER = gql`
   }
 `;
 
-
-function DeleteUser({ userId, refreshUsersList }) {
+function DeleteUser({ userId, refetchUserList }) {
 
   const updateParent = () => {
-    refreshUsersList();
+    refetchUserList();
   };
 
-  const [deleteUser, { loading, error }] = useMutation(DELETE_USER, {
+  const [deleteUser, { loading, error, networkStatus }] = useMutation(DELETE_USER, {
     onCompleted: updateParent,
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (networkStatus === 4) return "Refetching!";
+  if (loading) return "Loading...";
+  if (error) return `Error ${error.message}`;
 
   return (
-    <div>
+    <div id="delete-user-wrapper">
       <form
         onSubmit={(e) => {
           e.preventDefault();

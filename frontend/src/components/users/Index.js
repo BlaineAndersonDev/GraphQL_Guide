@@ -25,9 +25,7 @@ class Index extends React.Component {
   render() {
     return (
       <div id="user-index-wrapper">
-        <CreateUser 
-          forceRefresh={this.forceRefresh}
-        />
+        <h1 id="user-index-title">Users</h1>
         {this.state.selectedUser ? (
           <User
             user={this.state.selectedUser}
@@ -45,6 +43,9 @@ class Index extends React.Component {
             DeleteUser={DeleteUser} //Component
           />
         )}
+        <CreateUser
+          forceRefresh={this.forceRefresh}
+        />
       </div>
     );
   }

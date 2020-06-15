@@ -6,3 +6,11 @@
   justify-content: center;
   align-items: center;
 }
+.delete-user-button{
+  margin: 15px;
+  padding: 10px;
+  color: var(--mode-button-text);
+  background-color: var(--mode-button-background);
+  border: 2px var(--secondary-border) solid;
+  transition-duration: 0.4s;
+}

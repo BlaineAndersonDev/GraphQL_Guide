@@ -5,4 +5,27 @@
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+#create-user-title{
+
+}
+#create-user-form{
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+.create-user-input{
+  border-bottom: black 1px solid;
+  margin: 5px;
+}
+.create-user-button{
+  margin: 15px;
+  padding: 10px;
+  color: var(--mode-button-text);
+  background-color: var(--mode-button-background);
+  border: 2px var(--secondary-border) solid;
+  transition-duration: 0.4s;
 }

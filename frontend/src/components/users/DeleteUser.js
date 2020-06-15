@@ -40,7 +40,7 @@ function DeleteUser({ userId, refetchUserList }) {
           });
         }}
       >
-        <button type="submit">Delete</button>
+        <button className="delete-user-button" type="submit">Delete</button>
       </form>
     </div>
   );

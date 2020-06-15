@@ -1,9 +1,14 @@
 #user-index-wrapper{
   height: 100%;
   width: 100%;
-  background-color: whitesmoke;
+  background-color: var(--primary-background);
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
+}
+#user-index-title{
+  font-size: 2.5em;
+  font-weight: bold;
+  color: var(--secondary-text);
 }

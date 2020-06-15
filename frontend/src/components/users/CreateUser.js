@@ -40,8 +40,8 @@ function CreateUser({ forceRefresh }) {
 
   return (
     <div id="create-user-wrapper">
-      <h3>Create New User</h3>
-      <form onSubmit={e => {
+      <h3 id="create-user-title">Create New User</h3>
+      <form id="create-user-form" onSubmit={e => {
         e.preventDefault();
         createUser({
           variables: { name: name, email: email }
@@ -49,9 +49,9 @@ function CreateUser({ forceRefresh }) {
         setName("");
         setEmail("");
       }}>
-        <input type="text" value={name} placeholder="Name" onChange={(e) => setName(e.target.value)} />
-        <input type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        <button type="submit">Create User</button>
+        <input className="create-user-input" type="text" value={name} placeholder="Name" onChange={(e) => setName(e.target.value)} />
+        <input className="create-user-input" type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+        <button className="create-user-button" type="submit">Create User</button>
       </form>
     </div>
   );

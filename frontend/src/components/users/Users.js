@@ -46,17 +46,13 @@ function Users({ refreshCount, handleSelectedUser, UpdateUser, DeleteUser }) {
         <div className="users-container" key={user.id}>
 
           <div className="users-alterations-container">
-            <div id="users-update-button">
-              <img
-                src={UpdateIcon}
-                alt="Update"
-                className="users-alterations-button"
-                onClick={() => { ToggleUpdatePanel(user.id) } }
-              />
-            </div>
-            <div id="users-delete-button">
-              <DeleteUser userId={user.id} refetchUserList={refetchUserList} />
-            </div>
+            <img
+              src={UpdateIcon}
+              alt="Update"
+              className="users-alterations-button"
+              onClick={() => { ToggleUpdatePanel(user.id) } }
+            />
+            <DeleteUser userId={user.id} refetchUserList={refetchUserList} />
           </div>
 
           <div className="users-box">

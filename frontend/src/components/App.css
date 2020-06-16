@@ -5,14 +5,17 @@
   align-items: flex-start;
   background-color: var(--primary-background);
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
 }
 .app-mode-button{
-  margin: 15px;
+  margin: 10px;
+  margin-bottom: 0;
   padding: 10px;
-  color: var(--mode-button-text);
-  background-color: var(--mode-button-background);
+  color: var(--button-text);
+  background-color: var(--button-background);
   border: 2px var(--secondary-border) solid;
   transition-duration: 0.4s;
+  border-radius: 10px;
 }
 .app-mode-button:hover, .app-mode-button:focus{
   

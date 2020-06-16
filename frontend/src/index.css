@@ -57,6 +57,7 @@ html {
   --secondary-background: #495057;
   --secondary-text: #CED4DA;
   --secondary-border: #6C757D;
+  --interface-background: rgba(33, 37, 41, 0.95);
   --mode-button-background: #ADB5BD;
   --mode-button-text: #212529;
   --button-background: #000000;

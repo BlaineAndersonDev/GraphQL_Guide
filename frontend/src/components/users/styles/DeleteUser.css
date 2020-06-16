@@ -7,8 +7,9 @@
   align-items: center;
 }
 .delete-user-button{
-  margin: 15px;
-  padding: 10px;
+  margin: 5px;
+  margin-bottom: 0;
+  padding: 5px;
   color: var(--mode-button-text);
   background-color: var(--mode-button-background);
   border: 2px var(--secondary-border) solid;

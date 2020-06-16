@@ -1,42 +1,42 @@
-.u-user-wrapper {
+.update-user-wrapper {
   height: 100%;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
+  background-color: var(--interface-background);
 }
-/* Title / Button */
-  .title-button{
-    margin: 5px;
-    padding: 10px;
-    color: var(--mode-button-text);
-    background-color: var(--mode-button-background);
-    border: 2px var(--secondary-border) solid;
-    transition-duration: 0.4s;
-  }
-  .u-user-title{
-    color: var(--mode-button-text);
-  }
-/* Form */
-  .u-user-form{
-    display: none;
-  }
-  .u-user-form-dropdown{
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-  }
-  .u-user-input{
-    border-bottom: black 1px solid;
-    margin: 5px;
-  }
-.u-user-button{
-  margin: 15px;
-  padding: 10px;
-  color: var(--mode-button-text);
-  background-color: var(--mode-button-background);
-  border: 2px var(--secondary-border) solid;
-  transition-duration: 0.4s;
+.update-user-form{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+  align-items: center;
 }
+.update-user-title{
+  font-size: 1.5em;
+}
+.update-user-button-container{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.update-user-button{
+  margin: 0 15px;
+}
+.cancel-button{
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  font-size: 1.5em;
+}
+
+
+
+
+
+
+

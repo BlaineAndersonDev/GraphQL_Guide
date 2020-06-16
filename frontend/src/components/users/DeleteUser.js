@@ -2,6 +2,7 @@ import React from "react";
 import "./styles/DeleteUser.css";
 import gql from "graphql-tag";
 import { useMutation } from "react-apollo";
+import DeleteIcon from './styles/Trash.svg';
 
 const DELETE_USER = gql`
   mutation DeleteUser($id: ID!) {
@@ -40,7 +41,12 @@ function DeleteUser({ userId, refetchUserList }) {
           });
         }}
       >
-        <button className="delete-user-button" type="submit">Delete</button>
+        <button className="delete-user-button" type="submit">
+          <img
+            src={DeleteIcon}
+            alt="Delete"
+          />
+        </button>
       </form>
     </div>
   );

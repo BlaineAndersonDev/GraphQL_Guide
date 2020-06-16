@@ -3,6 +3,7 @@ import "./styles/Users.css";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import BlankAvatar from './styles/Avatar.svg';
+import UpdateIcon from './styles/Pencil.svg';
 
 const GET_USERS = gql`
   query {
@@ -21,6 +22,14 @@ function Users({ refreshCount, handleSelectedUser, UpdateUser, DeleteUser }) {
     refetch()
   };
 
+  const ToggleUpdatePanel = (userId) => {
+    if (document.getElementById(`users-${userId}-update-box`).classList.contains('hidden')) {
+      document.getElementById(`users-${userId}-update-box`).classList.remove('hidden');
+    } else {
+      document.getElementById(`users-${userId}-update-box`).classList.add('hidden');
+    };
+  };
+
   const { loading, error, data, refetch, networkStatus } = useQuery(GET_USERS);
 
   if (networkStatus === 4) return "Refetching!";
@@ -34,26 +43,40 @@ function Users({ refreshCount, handleSelectedUser, UpdateUser, DeleteUser }) {
   return (
     <div id="users-wrapper">
       {data.users.map((user) => (
-        <div className="users-container" key={user.id} >
-          <div className="users-first-box users-box">
+        <div className="users-container" key={user.id}>
+
+          <div className="users-alterations-container">
+            <div id="users-update-button">
+              <img
+                src={UpdateIcon}
+                alt="Update"
+                className="users-alterations-button"
+                onClick={() => { ToggleUpdatePanel(user.id) } }
+              />
+            </div>
+            <div id="users-delete-button">
+              <DeleteUser userId={user.id} refetchUserList={refetchUserList} />
+            </div>
+          </div>
+
+          <div className="users-box">
             <img 
+              onClick={() => { handleSelectedUser(user); }}
               className="users-avatar"
               src={BlankAvatar}
-              alt="Avatar"/>
-          </div>
-          <div className="users-second-box users-box">
+              alt="Avatar" />
             <h3 className="users-title">{user.name}</h3>
             <p className="users-text">Contributed {user.postsCount} posts</p>
           </div>
-          <div className="users-third-box users-box">
-            <button
-              className="u-users-button"
-              onClick={() => { handleSelectedUser(user); }}>
-              Select
-            </button>
-            <UpdateUser userId={user.id} refetchUserList={refetchUserList} />
-            <DeleteUser userId={user.id} refetchUserList={refetchUserList} />
+
+          <div id={`users-${user.id}-update-box`} className="users-update-box hidden">
+            <UpdateUser 
+              userId={user.id} 
+              refetchUserList={refetchUserList} 
+              ToggleUpdatePanel={ToggleUpdatePanel} 
+            />
           </div>
+
         </div>
       ))}
     </div>

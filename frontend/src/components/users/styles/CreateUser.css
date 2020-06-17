@@ -27,5 +27,4 @@
   color: var(--mode-button-text);
   background-color: var(--mode-button-background);
   border: 2px var(--secondary-border) solid;
-  transition-duration: 0.4s;
 }

@@ -1,11 +1,12 @@
 .app-wrapper {
   display: flex;
   flex-flow: column wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   background-color: var(--primary-background);
   font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
+  position: relative;
+	min-height: 100vh;
 }
 .app-mode-button{
   margin: 10px;
@@ -14,7 +15,6 @@
   color: var(--button-text);
   background-color: var(--button-background);
   border: 2px var(--secondary-border) solid;
-  transition-duration: 0.4s;
   border-radius: 10px;
 }
 .app-mode-button:hover, .app-mode-button:focus{

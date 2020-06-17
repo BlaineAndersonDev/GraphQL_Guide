@@ -19,9 +19,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-wrapper">
-        <button className="app-mode-button" onClick={this.updateVisualMode}>
+        <button 
+          className="app-mode-button" 
+          onClick={this.updateVisualMode}
+        >
           Update Mode
-          <div></div>
         </button>
         <Index />
       </div>

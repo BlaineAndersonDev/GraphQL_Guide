@@ -23,6 +23,10 @@ function Users({ refreshCount, handleSelectedUser, UpdateUser, DeleteUser }) {
     refetch()
   };
 
+  const handleUpdate = () => {
+    refetchUserList();
+  };
+
   const ToggleUpdatePanel = (userId) => {
     if (document.getElementById(`users-${userId}-update-box`).classList.contains('hidden')) {
       document.getElementById(`users-${userId}-update-box`).classList.remove('hidden');
@@ -83,7 +87,7 @@ function Users({ refreshCount, handleSelectedUser, UpdateUser, DeleteUser }) {
           <div id={`users-${user.id}-update-box`} className="users-update-box hidden">
             <UpdateUser 
               user={user} 
-              refetchUserList={refetchUserList} 
+              handleUpdate={handleUpdate} 
               ToggleUpdatePanel={ToggleUpdatePanel} 
             />
           </div>

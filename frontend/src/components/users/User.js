@@ -24,6 +24,11 @@ const GET_USER = gql`
 function User({ user, handleSelectedUser, forceRefresh, UpdateUser, DeleteUser }) {
 
   const refetchUserList = () => {
+    handleSelectedUser(null)
+    forceRefresh();
+  };
+
+  const handleUpdate = () => {
     refetch();
   };
 
@@ -91,7 +96,7 @@ function User({ user, handleSelectedUser, forceRefresh, UpdateUser, DeleteUser }
         >
           <UpdateUser
             user={data.user}
-            refetchUserList={refetchUserList}
+            handleUpdate={handleUpdate}
             ToggleUpdatePanel={ToggleUpdatePanel}
           />
         </div>

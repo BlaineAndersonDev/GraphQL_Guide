@@ -16,7 +16,7 @@ const UPDATE_USER = gql`
   }
 `;
 
-function UpdateUser({ user, refetchUserList, ToggleUpdatePanel }) {
+function UpdateUser({ user, handleUpdate, ToggleUpdatePanel }) {
   const updateState = () => {
     setName(user.name);
     setEmail(user.email);
@@ -24,7 +24,7 @@ function UpdateUser({ user, refetchUserList, ToggleUpdatePanel }) {
 
   const updateParent = () => {
     ToggleUpdatePanel(user.id)
-    refetchUserList();
+    handleUpdate();
   };
 
   const [name, setName] = useState(user.name);

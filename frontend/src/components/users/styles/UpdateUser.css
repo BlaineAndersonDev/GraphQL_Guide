@@ -17,21 +17,25 @@
 }
 .update-user-title{
   font-size: 1.5em;
+  color: var(--interface-text);
 }
-.update-user-button-container{
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
+.update-user-input{
+  width: 80%;
+  border-bottom: 1px solid var(--interface-border);
 }
 .update-user-button{
   margin: 0 15px;
+  padding: 5px;
+  color: var(--interface-text);
+  background-color: var(--interface-button-background);
+  border: 2px var(--interface-border) solid;
+  border-radius: 10px;
 }
 .cancel-button{
   position: absolute;
   top: 15px;
   right: 10px;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 
 

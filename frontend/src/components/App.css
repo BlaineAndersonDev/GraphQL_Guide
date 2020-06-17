@@ -6,16 +6,20 @@
   background-color: var(--primary-background);
   font-family: Arial, Helvetica, sans-serif;
   position: relative;
-	min-height: 100vh;
+  min-height: 100vh;
+  position: relative;
 }
 .app-mode-button{
-  margin: 10px;
-  margin-bottom: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 5px;
   padding: 10px;
   color: var(--button-text);
   background-color: var(--button-background);
   border: 2px var(--secondary-border) solid;
   border-radius: 10px;
+  z-index: 10;
 }
 .app-mode-button:hover, .app-mode-button:focus{
   

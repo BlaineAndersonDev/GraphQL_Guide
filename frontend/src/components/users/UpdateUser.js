@@ -16,19 +16,19 @@ const UPDATE_USER = gql`
   }
 `;
 
-function UpdateUser({ userId, refetchUserList, ToggleUpdatePanel }) {
+function UpdateUser({ user, refetchUserList, ToggleUpdatePanel }) {
   const updateState = () => {
-    setName("");
-    setEmail("");
+    setName(user.name);
+    setEmail(user.email);
   };
 
   const updateParent = () => {
-    ToggleUpdatePanel(userId)
+    ToggleUpdatePanel(user.id)
     refetchUserList();
   };
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
   const [updateUser, { loading, error, networkStatus }] = useMutation(UPDATE_USER, {
     update: updateState,
     onCompleted: updateParent
@@ -43,7 +43,7 @@ function UpdateUser({ userId, refetchUserList, ToggleUpdatePanel }) {
       <form className="update-user-form"onSubmit={e => {
         e.preventDefault();
         updateUser({
-          variables: { id: userId, name: name, email: email }
+          variables: { id: user.id, name: name, email: email }
         });
       }}>
         <h3 className="update-user-title">Update User</h3>
@@ -63,7 +63,7 @@ function UpdateUser({ userId, refetchUserList, ToggleUpdatePanel }) {
         />
         <button className="update-user-button" type="submit">Submit</button>
       </form>
-      <button className="update-user-button cancel-button" onClick={() => { ToggleUpdatePanel(userId) }}>✖</button>
+      <button className="update-user-button cancel-button" onClick={() => { ToggleUpdatePanel(user.id) }}>✖</button>
     </div>
   );
 };

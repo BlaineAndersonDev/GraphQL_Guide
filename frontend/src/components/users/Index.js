@@ -25,7 +25,6 @@ class Index extends React.Component {
   render() {
     return (
       <div id="user-index-wrapper">
-        <h1 id="user-index-title">Users</h1>
         {this.state.selectedUser ? (
           <User
             user={this.state.selectedUser}

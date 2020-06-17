@@ -60,15 +60,18 @@ html {
 	--secondary-border: #6C757D;
 	
 	--interface-background: rgba(33, 37, 41, 0.95);
+  --interface-text: #CED4DA;
+	--interface-border: #6C757D;
+  --interface-button-background: #343A40;
 	
   --button-background: #ADB5BD;
 	--button-text: #212529;
 }
 /* Light Mode */
 html[data-theme='light'] {
-	--primary-background: #E9ECEF; 
+	--primary-background: #CED4DA; 
 	
-  --secondary-background: #CED4DA;
+  --secondary-background: #E9ECEF;
   --secondary-text: #343A40;
 	--secondary-border: #495057;
 	

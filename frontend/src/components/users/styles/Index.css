@@ -7,8 +7,3 @@
   justify-content: flex-start;
   align-items: center;
 }
-#user-index-title{
-  font-size: 2.5em;
-  font-weight: bold;
-  color: var(--secondary-text);
-}

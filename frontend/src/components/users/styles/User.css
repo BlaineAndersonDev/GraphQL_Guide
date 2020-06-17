@@ -1,21 +1,103 @@
-#user-wrapper {
+.user-wrapper {
   height: 100%;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
+  color: var(--secondary-text);
+  position: relative;
+  z-index: 0;
 }
-#user-posts-container {
+  .user-alteration-buttons{
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .user-alteration-button{
+    margin: 5px;
+    margin-bottom: 0;
+    padding: 5px;
+    color: var(--button-text);
+    background-color: var(--button-background);
+    border: 2px var(--secondary-border) solid;
+    border-radius: 10px;
+  }
+  .user-information-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+  }
+    .user-avatar{
+      height: 200px;
+      width: 200px;
+      border-radius: 20%;
+      border: 2px solid var(--secondary-border);
+      box-shadow: 1px 1px 1px black;
+    }
+    .user-title{
+      font-weight: bold;
+      font-size: 2.0em;
+      padding: 15px 0; 
+    }
+    .user-text{
+      font-size: 1.3em;
+      padding-bottom: 15px; 
+    }
+    .user-update-box {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: center;
+      align-items: center;
+      transition: all .5s ease-in-out;
+    }
+    .user-info{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: center;
+      align-items: center;
+    }
+    .hidden{
+      display: none;
+    }
+
+.user-posts-container {
+  height: 100%;
+  width: 80%;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  margin: 10px;
+  padding: 20px 0;
+  border-top: 1px solid var(--secondary-border)
 }
-.user-post {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-}
+  .user-posts-title{
+      font-weight: bold;
+      font-size: 1.5em;
+      padding: 15px 0; 
+      cursor: ointer;
+  }
+  .user-post {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    margin: 5px 0;
+  }
+    .user-post-title{
+      text-align: center;
+    }

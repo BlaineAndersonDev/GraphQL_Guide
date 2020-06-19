@@ -34,17 +34,15 @@ class Index extends React.Component {
             DeleteUser={DeleteUser} //Component
           />
         ) : (
-          <Users 
-            refreshCount = {this.state.refreshCount}
+          <Users
+            refreshCount={this.state.refreshCount}
             forceRefresh={this.forceRefresh}
             handleSelectedUser={this.handleSelectedUser}
+            CreateUser={CreateUser} //Component
             UpdateUser={UpdateUser} //Component
             DeleteUser={DeleteUser} //Component
           />
         )}
-        <CreateUser
-          forceRefresh={this.forceRefresh}
-        />
       </div>
     );
   }

@@ -17,7 +17,7 @@ const GET_USERS = gql`
   }
 `;
 
-function Users({ refreshCount, handleSelectedUser, UpdateUser, DeleteUser }) {
+function Users({ refreshCount, handleSelectedUser, forceRefresh, CreateUser, UpdateUser, DeleteUser }) {
 
   const refetchUserList = () => {
     refetch()
@@ -50,33 +50,42 @@ function Users({ refreshCount, handleSelectedUser, UpdateUser, DeleteUser }) {
       <h1 className="users-header">Users</h1>
       {data.users.map((user) => (
         <div className="users-container" key={user.id}>
-
           <div className="users-alterations-container">
             <img
               src={UpdateIcon}
               alt="Update"
               className="users-alterations-button"
-              onClick={() => { ToggleUpdatePanel(user.id) } }
+              onClick={() => {
+                ToggleUpdatePanel(user.id);
+              }}
             />
             <DeleteUser userId={user.id} refetchUserList={refetchUserList} />
           </div>
 
           <div className="users-box">
             {user.avatar ? (
-              <img 
-                onClick={() => { handleSelectedUser(user); }}
+              <img
+                onClick={() => {
+                  handleSelectedUser(user);
+                }}
                 className="users-avatar"
                 src={user.avatar}
-                alt="Avatar" />
-            ):(
-              <img 
-                onClick={() => { handleSelectedUser(user); }}
+                alt="Avatar"
+              />
+            ) : (
+              <img
+                onClick={() => {
+                  handleSelectedUser(user);
+                }}
                 className="users-avatar"
                 src={BlankAvatar}
-                alt="Avatar" />
+                alt="Avatar"
+              />
             )}
-            <h3 
-              onClick={() => { handleSelectedUser(user); }}
+            <h3
+              onClick={() => {
+                handleSelectedUser(user);
+              }}
               className="users-title"
             >
               {user.name}
@@ -84,16 +93,19 @@ function Users({ refreshCount, handleSelectedUser, UpdateUser, DeleteUser }) {
             <p className="users-text">Contributed {user.postsCount} posts</p>
           </div>
 
-          <div id={`users-${user.id}-update-box`} className="users-update-box hidden">
-            <UpdateUser 
-              user={user} 
-              handleUpdate={handleUpdate} 
-              ToggleUpdatePanel={ToggleUpdatePanel} 
+          <div
+            id={`users-${user.id}-update-box`}
+            className="users-update-box hidden"
+          >
+            <UpdateUser
+              user={user}
+              handleUpdate={handleUpdate}
+              ToggleUpdatePanel={ToggleUpdatePanel}
             />
           </div>
-
         </div>
       ))}
+      <CreateUser forceRefresh={forceRefresh} />
     </div>
   );
 }
